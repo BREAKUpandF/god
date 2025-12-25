@@ -1,0 +1,42 @@
+name: 部署Vite+React项目到GitHub Pages
+on:
+  # 推送到main分支时自动部署
+  push:
+    branches: [main]
+  # 允许手动触发部署
+  workflow_dispatch:
+
+# 配置Pages部署权限
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. 拉取仓库代码
+      - name: 拉取代码
+        uses: actions/checkout@v4
+
+      # 2. 安装Node.js（选Vite兼容的18.x版本）
+      - name: 安装Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm' # 缓存npm依赖，加快构建
+
+      # 3. 安装项目依赖
+      - name: 安装依赖
+        run: npm install
+
+      # 4. 构建Vite项目（Vite默认输出到dist目录）
+      - name: 构建项目
+        run: npm run build
+
+      # 5. 部署dist目录到GitHub Pages
+      - name: 部署到GitHub Pages
+        uses: actions/deploy-pages@v4
+        with:
+          folder: ./dist # Vite的构建产物目录
