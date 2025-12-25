@@ -596,7 +596,7 @@ export default function GrandTreeApp() {
   const [sceneState, setSceneState] = useState<'CHAOS' | 'FORMED'>('CHAOS');
   const [rotationSpeed, setRotationSpeed] = useState(0);
   const [aiStatus, setAiStatus] = useState("INITIALIZING...");
-  const [debugMode, setDebugMode] = useState(false);
+  const [debugMode] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // 在组件内部添加音频自动播放初始化  
