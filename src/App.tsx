@@ -21,15 +21,15 @@ const TOTAL_NUMBERED_PHOTOS = 31;
 // 修改：将 top.jpg 加入到数组开头
 // 先定义生成适配路径的工具函数（复用性更高）
 // 2. 简化路径函数（直接指向public/photos，无容错）
-const getPhotoPath = (fileName: string) => {
-  return `/photos/${fileName}`; // 直接用public目录路径，Vite会自动适配base
+const getPath = (fileName: string, type: 'music' | 'photos') => {
+  return `/god/${type}/${fileName}`; // 比如生成/god/music/1.mp3、/god/photos/top.jpg
 };
 
-// 3. 路径数组（无过滤，保持原有结构）
+// 替换图片路径
 const bodyPhotoPaths = [
-  getPhotoPath('top.jpg'),
+  getPath('top.jpg', 'photos'),
   ...Array.from({ length: TOTAL_NUMBERED_PHOTOS }, (_, i) =>
-    getPhotoPath(`${i + 1}.jpg`)
+    getPath(`${i + 1}.jpg`, 'photos')
   )
 ];
 
@@ -611,7 +611,7 @@ export default function GrandTreeApp() {
   // 在组件内部添加音频自动播放初始化  
   useEffect(() => {
     const initAudio = async () => {
-      audioRef.current = new Audio('/music/1.mp3');
+      audioRef.current = new Audio(getPath('1.mp3', 'music'));
       audioRef.current.loop = true;
       audioRef.current.volume = 0.3;
 
