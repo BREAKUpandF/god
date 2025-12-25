@@ -17,7 +17,7 @@ import * as random from 'maath/random';
 import { GestureRecognizer, FilesetResolver, DrawingUtils } from "@mediapipe/tasks-vision";
 const BASE_URL = import.meta.env.BASE_URL;
 // --- 动态生成照片列表 (top.jpg + 1.jpg 到 31.jpg) ---
-const TOTAL_NUMBERED_PHOTOS = 31;
+const TOTAL_NUMBERED_PHOTOS = 30;
 // 修改：将 top.jpg 加入到数组开头
 // 先定义生成适配路径的工具函数（复用性更高）
 // 2. 简化路径函数（直接指向public/photos，无容错）
@@ -49,10 +49,10 @@ const CONFIG = {
     candyColors: ['#FF0000', '#FFFFFF']
   },
   counts: {
-    foliage: 15000,
-    ornaments: 250,   // 从300减少到250  
-    elements: 200,
-    lights: 400
+    foliage: 8000,   // 从 15000 → 8000
+    ornaments: 150,  // 从 250 → 150
+    elements: 100,   // 从 200 → 100
+    lights: 200      // 从 400 → 200
   },
   tree: { height: 22, radius: 9 }, // 树体尺寸
   photos: {
@@ -492,7 +492,7 @@ const Experience = ({ sceneState, rotationSpeed }: { sceneState: 'CHAOS' | 'FORM
       <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
       <Meteors />
       <Environment
-        files={`${import.meta.env.BASE_URL}hdri/dikhololo_night_4k.hdr`}
+        files={`${import.meta.env.BASE_URL}hdri/dikhololo_night_1k.hdr`}
         background={false}
       />
 
