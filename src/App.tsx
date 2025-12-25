@@ -19,9 +19,18 @@ import { GestureRecognizer, FilesetResolver, DrawingUtils } from "@mediapipe/tas
 // --- 动态生成照片列表 (top.jpg + 1.jpg 到 31.jpg) ---
 const TOTAL_NUMBERED_PHOTOS = 31;
 // 修改：将 top.jpg 加入到数组开头
+// 先定义生成适配路径的工具函数（复用性更高）
+// 2. 简化路径函数（直接指向public/photos，无容错）
+const getPhotoPath = (fileName: string) => {
+  return `/photos/${fileName}`; // 直接用public目录路径，Vite会自动适配base
+};
+
+// 3. 路径数组（无过滤，保持原有结构）
 const bodyPhotoPaths = [
-  '/photos/top.jpg',
-  ...Array.from({ length: TOTAL_NUMBERED_PHOTOS }, (_, i) => `/photos/${i + 1}.jpg`)
+  getPhotoPath('top.jpg'),
+  ...Array.from({ length: TOTAL_NUMBERED_PHOTOS }, (_, i) =>
+    getPhotoPath(`${i + 1}.jpg`)
+  )
 ];
 
 // --- 视觉配置 ---
