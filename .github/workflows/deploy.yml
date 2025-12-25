@@ -28,7 +28,12 @@ jobs:
       - name: 构建项目
         run: npm run build
       
+      # 新增：将构建产物上传为GitHub Pages部署工件
+      - name: 上传部署工件
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist  # 指向Vite的构建目录
+      
+      # 调整：部署已上传的工件（无需folder参数）
       - name: 部署到GitHub Pages
         uses: actions/deploy-pages@v4
-        with:
-          folder: ./dist
