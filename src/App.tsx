@@ -15,22 +15,20 @@ import * as THREE from 'three';
 import { MathUtils } from 'three';
 import * as random from 'maath/random';
 import { GestureRecognizer, FilesetResolver, DrawingUtils } from "@mediapipe/tasks-vision";
-
+const BASE_URL = import.meta.env.BASE_URL;
 // --- 动态生成照片列表 (top.jpg + 1.jpg 到 31.jpg) ---
 const TOTAL_NUMBERED_PHOTOS = 31;
 // 修改：将 top.jpg 加入到数组开头
 // 先定义生成适配路径的工具函数（复用性更高）
 // 2. 简化路径函数（直接指向public/photos，无容错）
-const getPath = (fileName: string, type: 'music' | 'photos') => {
-  return `/god/${type}/${fileName}`; // 比如生成/god/music/1.mp3、/god/photos/top.jpg
+const getPhotoPath = (fileName: string) => {
+  return `${BASE_URL}photos/${fileName}`; // 本地是/photos/top.jpg，部署是/god/photos/top.jpg
 };
 
 // 替换图片路径
 const bodyPhotoPaths = [
-  getPath('top.jpg', 'photos'),
-  ...Array.from({ length: TOTAL_NUMBERED_PHOTOS }, (_, i) =>
-    getPath(`${i + 1}.jpg`, 'photos')
-  )
+  getPhotoPath('top.jpg'),
+  ...Array.from({ length: TOTAL_NUMBERED_PHOTOS }, (_, i) => getPhotoPath(`${i + 1}.jpg`)) // 替换10为你的图片数量
 ];
 
 // --- 视觉配置 ---
@@ -611,7 +609,7 @@ export default function GrandTreeApp() {
   // 在组件内部添加音频自动播放初始化  
   useEffect(() => {
     const initAudio = async () => {
-      audioRef.current = new Audio(getPath('1.mp3', 'music'));
+      audioRef.current = new Audio(`${BASE_URL}music/1.mp3`); // 自动适配路径
       audioRef.current.loop = true;
       audioRef.current.volume = 0.3;
 
