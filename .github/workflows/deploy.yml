@@ -1,4 +1,4 @@
-name: 部署Vite+React项目到GitHub Pages
+name: 部署Vite项目到GitHub Pages
 on:
   push:
     branches: [main]
@@ -16,7 +16,7 @@ jobs:
       - name: 拉取代码
         uses: actions/checkout@v4
       
-      - name: 安装Node.js
+      - name: 安装Node.js 18
         uses: actions/setup-node@v4
         with:
           node-version: 18
@@ -28,12 +28,10 @@ jobs:
       - name: 构建项目
         run: npm run build
       
-      # 新增：将构建产物上传为GitHub Pages部署工件
-      - name: 上传部署工件
+      - name: 上传构建产物
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist  # 指向Vite的构建目录
+          path: ./dist
       
-      # 调整：部署已上传的工件（无需folder参数）
       - name: 部署到GitHub Pages
         uses: actions/deploy-pages@v4
