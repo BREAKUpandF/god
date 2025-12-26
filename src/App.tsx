@@ -180,7 +180,7 @@ const PhotoOrnaments = ({ state }: { state: 'CHAOS' | 'FORMED' }) => {
         textureIndex: i % textures.length,
         borderColor,
         currentPos: chaosPos.clone(),
-        chaosRotation,
+        chaosRotation,   
         rotationSpeed,
         wobbleOffset: Math.random() * 10,
         wobbleSpeed: 0.5 + Math.random() * 0.5
